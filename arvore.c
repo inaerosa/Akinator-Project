@@ -25,29 +25,16 @@ int main(){
 				printf("Jogo em construcao");
 			break;
 			case 2:
-				do{
-    				printf("Informe uma pergunta: ");
-        			scanf ("%s", p);
+    				printf("Informe uma pergunta: ");//sabe voar?
+        			scanf ("%s", p); 
         			Arvore * pergunta = arvore_cria(p);
-        			printf ("Informe a resposta: ");
-        			scanf ("%s", r);
-        			if (strcmp(r, "sim") == 0){ 
-        				Arvore * sim = arvore_cria(r);
-            			arvore_insere(pergunta,sim);
-            			arvore_imprime(pergunta);
-        			} else if (strcmp(r, "nao") == 0){
-        				Arvore * nao = arvore_cria(r);
-            			arvore_insere(pergunta,nao);
-            			printf ("Outra pergunta: ");
-            			scanf ("%s", p);
-            			printf ("Informe a resposta: ");
-            			scanf ("%s", r);
-            			Arvore * pAux = arvore_cria(p);
-            			arvore_insere(pAux, r);
-            			arvore_imprime(pAux);
-        			}
-       			 cont++;
-				} while(cont > 2);
+        			
+        			printf ("Informe a resposta certa: "); 
+        			scanf ("%s", certa); 
+        			Arvore * certa = arvore_cria(r);
+        			printf ("Informe a resposta errada: ");
+        			scanf("%s", errada); 
+        			Arvore * errada = arvore_cria(r);
 			break;
 		}
 	} while (opc != 0);
