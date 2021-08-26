@@ -12,10 +12,40 @@ int main(){
  	int cont=0;
  	char resposta[3];
  	int opc;
- 	
+ 	Arvore * pergunta;
+ 	Arvore * certa;
+ 	Arvore * errada;
  	char resp_certa[50];
 	char resp_errada[50];
+	char respota[3];
 	
+		int verifica_arvore(Arvore * raiz){
+		if (raiz == NULL){
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+	
+	
+	
+	Arvore * inserePerguntaResposta(){
+			
+			printf("Informe uma pergunta: ");
+	        scanf ("%s", p);  
+	        pergunta = arvore_cria(p); 
+			printf ("Informe a resposta certa: "); 
+			scanf ("%s", resp_certa); 
+			pergunta->sim = arvore_cria(resp_certa); 
+			arvore_insere(pergunta, resp_certa);
+			printf ("Informe a resposta errada: ");
+			scanf("%s", resp_errada); 
+			pergunta->nao = arvore_cria(resp_errada); 
+			arvore_insere(pergunta, resp_errada);
+	
+	}
+	
+
 	do{
 		printf("------------AKINATOR-------------\n");
 		printf ("          [0] - Sair            |\n");
@@ -25,38 +55,38 @@ int main(){
 		printf ("--------------------------------\n");
 		switch (opc){
 			case 1:
-				printf("Jogo em construcao");
-				
-//					printf ("é um menino?");				
-//					scanf ("%s", r);
-//					if (strcmp(r, "sim") == 0){ 
-//        				r->c = insere(r->direita, conteudo);
-
-//            	
-//            			arvore_imprime(pergunta);
-//        			} else if (strcmp(r, "nao") == 0){
-//        				
-//            			arvore_insere(pergunta,nao);
-//            			
-//        			}
-//					
+				if (verifica_arvore(pergunta) == 0){
+					printf ("Sou burro\n");
+					inserePerguntaResposta();
+				} else {
+					printf("Reproduz o jogo\n");
+					printf ("%s", pergunta->info);
+					scanf ("%s", resposta);
+					if (strcmp(resposta, "sim") == 0) {
+						printf ("A resposta eh %s?\n", pergunta->sim);
+						scanf ("%s", resposta);
+						opc = 0;
+					} else if (strcmp(resposta, "nao")== 0){
+						printf ("A resposta eh %s\n", pergunta->nao);
+						scanf ("%s", resposta);
+						if (strcmp(resposta, "sim") == 0) {
+							printf ("Descobri! A resposta eh %s\n", pergunta->sim);
+							opc = 0;
+						}else if (strcmp(resposta, "nao") == 0){
+							printf ("Isso eh novo para mim, me ensina?");
+							inserePerguntaResposta();
+						}
+					}
+				}
+		
 			break;
 			case 2:
-    				printf("Informe uma pergunta: ");
-        			scanf ("%s", p);  //é menino?
-        			Arvore * pergunta = arvore_cria(p); //cria uma folha pergunta
-        			printf ("Informe a resposta certa: "); 
-        			scanf ("%s", resp_certa); //se o usuario informar sim, é o mickey
-        			Arvore * certa = arvore_cria(resp_certa); //crio uma folha pra resposta certa
-        			arvore_insere(pergunta, resp_certa);
-        			printf ("Informe a resposta errada: ");
-        			scanf("%s", resp_errada); //se o usuario informar que não, é a minnie?
-        			Arvore * errada = arvore_cria(resp_errada); //crio uma folha pra respota errada
-        			arvore_insere(pergunta, resp_errada);
+				 inserePerguntaResposta();
 			break;
 		}
 	} while (opc != 0);
 	 
+	 printf ("\nAdeus");
         
     
 //     printf("\n Altura: %d", arvore_altura(pergunta));
