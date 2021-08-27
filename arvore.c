@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -28,62 +27,45 @@ int main(){
 		}
 	}
 	
-	
-	
+	pergunta = arvore_cria(p); 
 	Arvore * inserePerguntaResposta(){
 		if (cont == 0){
 			printf("Informe uma pergunta: ");
 			fflush(stdin);
 	        scanf ("%s", p);  
-	     
 	       	pergunta = arvore_cria(p); 
 			printf ("Informe a resposta certa: "); 
 			fflush(stdin);
 			scanf ("%s", resp_certa); 
-		
 			pergunta->sim = arvore_cria(resp_certa); 
-//			arvore_insere(pergunta, resp_certa);
 			printf ("Informe a resposta errada: ");
 			fflush(stdin);
 			scanf("%s", resp_errada); 
 			pergunta->nao = arvore_cria(resp_errada); 
-//			arvore_insere(pergunta, resp_errada);
 			cont++;
 		 }else {
 			Arvore * aux = pergunta->nao;
-//			if (aux->nao !=NULL){
-//				for (aux = pergunta->nao; aux->nao != NULL; aux = aux->nao)
-//       		{
-//       			printf("%x %s %x %x\n", aux, aux->info, aux->sim, aux->nao );
-//			   }
-//			}
-       		
+			if (aux->nao !=NULL){
+			while(aux->nao != NULL)
+       		{
+       			aux=aux->nao;
+			   }
+			}
 			printf("Informe uma pergunta: ");
 			fflush(stdin);
         	scanf ("%s", p); 
-			
-       		//criar variavel auxiliar que receba pergunta apontando pra nao?
-       		//aux = arvore_cria(p); 
 			printf ("Informe a resposta certa: ");
 			fflush(stdin); 
 			scanf ("%s", resp_certa); 
 			aux->sim = arvore_cria(resp_certa); 
-//			arvore_insere(aux->sim, resp_certa);
 			printf ("Informe a resposta errada: ");
 			fflush(stdin);
 			scanf("%s", resp_errada); 
 			
 			aux->nao = arvore_cria(resp_errada); 
-			printf ("%s", aux->info);
-			//aux->info tem que ser ornitorrinco
-//			arvore_insere(aux->nao, resp_errada);
 			
 		}
-			
-	
 	}
-	
-
 	do{
 		printf("------------AKINATOR-------------\n");
 		printf ("          [0] - Sair            |\n");
@@ -93,29 +75,37 @@ int main(){
 		printf ("--------------------------------\n");
 		switch (opc){
 			case 1:
-				if (verifica_arvore(pergunta) == 0){
+				
+				if (pergunta==NULL){
 					printf ("Me ensine alguma coisa :)\n");
 					inserePerguntaResposta();
 				} else {
-					printf("Reproduz o jogo\n");
-					printf ("%s", pergunta->info);
-					scanf ("%s", resposta);
-					if (strcmp(resposta, "sim") == 0) {
-						printf ("A resposta eh %s?\n", pergunta->sim);
-						scanf ("%s", resposta);
-						opc = 0;
-					} else if (strcmp(resposta, "nao")== 0){
-						printf ("A resposta eh %s?\n", pergunta->nao);
-						scanf ("%s", resposta);
-						if (strcmp(resposta, "sim") == 0) {
-							printf ("Descobri! A resposta eh %s\n", pergunta->nao);
-							opc = 0;
-						}else if (strcmp(resposta, "nao") == 0){
-							printf ("Isso eh novo para mim, me ensina?\n\n");
-							inserePerguntaResposta();
+					aux=pergunta;
+					while(aux->nao!=NULL){
+						printf("A resposta eh %s?\n", aux->sim);
+						scanf("%s", resposta);
+						if(strcmp(resposta,"sim")==0){
+							system("cls");
+							printf ("Descobri! A resposta eh %s\n", aux->sim);
+							return 0;
 						}
+						else if(strcmp(resposta,"nao")==0){
+							printf("A resposta eh %s?\n", aux->nao);
+							scanf("%s", resposta);
+							if(strcmp(resposta,"sim")==0){
+								system("cls");
+								printf ("Descobri! A resposta eh %s\n", aux->nao);
+								return 0;
+							}
+						}
+						aux=aux->nao;
+					}
+					if (aux->nao==NULL){
+						printf ("Isso eh novo para mim, me ensina?\n\n");
+						inserePerguntaResposta();
 					}
 				}
+				
 			break;
 			case 2:
 				 inserePerguntaResposta();
